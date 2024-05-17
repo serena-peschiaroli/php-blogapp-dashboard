@@ -4,3 +4,5 @@ return [
     'author_avatar' => 'src\resources\images\author_avatar.webp'
     
 ];
+
+

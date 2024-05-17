@@ -1,22 +1,47 @@
 <?php
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$queryString = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-
-// Initialize an empty array for query parameters
-$queryParams = [];
-
-// Only parse the query string if it's not null
-if ($queryString !== null) {
-    parse_str($queryString, $queryParams);
-}
+$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+$uri = trim($uri, '/');
 
 $routes = [
-    '/' => 'controllers/index.php',
-    '/about' => 'controllers/about.php',
-    '/contact' => 'controllers/contact.php',
-    '/mission' => 'controllers/mission.php',
-    '/post.php' => 'controllers/show.php'
+    '' => 'controllers/index.php',
+    'about' => 'controllers/about.php',
+    'contact' => 'controllers/contact.php',
+    'mission' => 'controllers/mission.php',
+    'post' => 'controllers/post.php'
 ];
 
-routeToController($uri, $routes, $queryParams);
+function routeToController($uri, $routes)
+{
+    foreach ($routes as $route => $controller) {
+        // convert the route into a regular expression
+        $routePattern = preg_replace('/{[^\/]+}/', '([^/]+)', $route);
+
+        if (preg_match("#^$routePattern$#", $uri, $matches)) {
+            array_shift($matches); // remove the full match from the $matches array
+
+            // extract the route parameters if present
+            $routeParams = [];
+            if (preg_match_all('/{([^\/]+)}/', $route, $paramNames)) {
+                $routeParams = array_combine($paramNames[1], $matches);
+            }
+
+            // merge route parameters with existing $_GET parameters
+            $_GET = array_merge($_GET, $routeParams);
+
+            require $controller;
+            return;
+        }
+    }
+
+    abort();
+}
+
+function abort($code = 404)
+{
+    http_response_code($code);
+    require "views/{$code}.php";
+    die();
+}
+
+routeToController($uri, $routes);
