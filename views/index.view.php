@@ -6,6 +6,8 @@
 
     <div class="container my-5">
         <h1 class="mb-4">Blog Posts</h1>
+        <a class="btn btn-primary mb-4" href="/new-post">New Post</a>
+        <br>
         <?php if (!empty($posts)) : ?>
             <div class="list-group">
                 <?php foreach ($posts as $post) : ?>

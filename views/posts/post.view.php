@@ -1,6 +1,6 @@
-<?php require('./views/partials/head.php'); ?>
-<?php require('./views/partials/nav.php'); ?>
-<?php require('./views/partials/banner.php'); ?>
+<?php require(__DIR__ . '/../partials/head.php'); ?>
+<?php require(__DIR__ . '/../partials/nav.php'); ?>
+<?php require(__DIR__ . '/../partials/banner.php'); ?>
 
 <main>
     <div class="container my-5">
