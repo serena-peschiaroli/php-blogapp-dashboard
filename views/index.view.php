@@ -11,7 +11,7 @@
                 <?php foreach ($posts as $post) : ?>
                     <a href="post.php?id=<?= $post['id'] ?>" class="list-group-item list-group-item-action">
                         <h5 class="mb-1"><?= ($post['title']) ?></h5>
-                        <p class="mb-1"><?= ($post['author_id']) ?></p>
+                        <p class="mb-1"><?= ($post['username']) ?></p>
                         <p class="mb-1"><?= ($post['body']) ?></p>
                         <small>Posted on <?= ($post['created_at']) ?></small>
                     </a>

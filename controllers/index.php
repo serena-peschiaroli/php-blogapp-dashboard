@@ -12,12 +12,19 @@ $password = 'root';
 try {
     $pdo = new PDO($dsn, $username, $password);
 
-    $statement = $pdo->prepare("SELECT * FROM post");
-    $statement->execute();
+    // modified  query to join posts and authors tables
+    $query = "
+        SELECT posts.*, authors.username 
+        FROM posts 
+        JOIN authors ON posts.author_id = authors.id
+    ";
 
-    $posts = $statement->fetchAll();
+    $statement = $pdo->prepare($query);
+    $statement->execute();
+    $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+
     
-    // var_dump($posts); var dump for debug 
+    // var_dump($posts); var dump for debug
 
     // Use $post as needed
     require './views/index.view.php';
