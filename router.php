@@ -9,7 +9,9 @@ $routes = [
     'contact' => 'controllers/contact.php',
     'mission' => 'controllers/mission.php',
     'post' => 'controllers/post.php',
-    'new-post' => 'controllers/new-post.php'
+    'new-post' => 'controllers/new-post.php',
+    'edit-post' => 'controllers/edit-post.php',
+    'delete' => 'controllers/delete.php'
 ];
 
 function routeToController($uri, $routes)

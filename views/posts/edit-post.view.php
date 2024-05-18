@@ -21,6 +21,7 @@
         <?php endif; ?>
 
         <form method="POST">
+            <input type="hidden" name="id" value="<?= $id ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="title">Title:</label>
                 <div class="col-sm-6">
@@ -40,7 +41,7 @@
                 <div class="col-sm-6">
                     <select class="form-control" name="categories[]" id="categories" multiple>
                         <?php foreach ($categories as $category) : ?>
-                            <option value="<?= $category['id'] ?>">
+                            <option value="<?= $category['id'] ?>" <?= in_array($category['id'], $selectedCategories) ? 'selected' : '' ?>>
                                 <?= $category['name'] ?>
                             </option>
                         <?php endforeach; ?>
