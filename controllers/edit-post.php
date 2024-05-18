@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $pdo = new PDO($dsn, $username, $password);
 
         // Fetch post details
-        $statement = $pdo->prepare("SELECT posts.*, authors.username FROM posts JOIN authors ON posts.author_id = authors.id WHERE posts.id = :id");
+        $statement = $pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.author_id = users.id WHERE posts.id = :id AND users.role = 'author'");
         $statement->bindValue(':id', $id);
         $statement->execute();
         $post = $statement->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $body = $post['body'];
 
         // Fetch authors
-        $statement = $pdo->query("SELECT * FROM authors");
+        $statement = $pdo->query("SELECT * FROM users WHERE role = 'author'");
         $authors = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         // Fetch categories
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $title = $_POST["title"];
     $authorId = $_POST["author_id"];
     $body = $_POST["body"];
-    $categories = $_POST["categories"];
+    $categories = isset($_POST["categories"]) ? $_POST["categories"] : [];
 
     if (empty($title) || empty($authorId) || empty($body)) {
         $errorMessage = "All fields are required";
@@ -72,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $password = "root";
             $pdo = new PDO($dsn, $username, $password);
 
-            // Start a transaction
+            // start transaction
             $pdo->beginTransaction();
 
-            // Update post details
+            // update post 
             $statement = $pdo->prepare("UPDATE posts SET title = :title, author_id = :author_id, body = :body WHERE id = :id");
             $statement->bindValue(':title', $title);
             $statement->bindValue(':author_id', $authorId);
@@ -83,13 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $statement->bindValue(':id', $id);
             $statement->execute();
 
-            // Update categories in pivot table
-            // First delete existing categories for the post
+            // update categories in pivot table
+            // delete existing categories for the post
             $statement = $pdo->prepare("DELETE FROM category_post WHERE post_id = :id");
             $statement->bindValue(':id', $id);
             $statement->execute();
 
-            // Insert new categories for the post
+            // isnert new categories for the post
             foreach ($categories as $category_id) {
                 $statement = $pdo->prepare("INSERT INTO category_post (post_id, category_id) VALUES (:post_id, :category_id)");
                 $statement->bindValue(':post_id', $id);
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $statement->execute();
             }
 
-            // Commit the transaction
+            // commit  transaction
             $pdo->commit();
 
             $successMessage = "Post updated successfully!";
@@ -108,17 +108,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-// Fetch authors and categories again for form repopulation
+// fetch authors and categories 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || ($_SERVER['REQUEST_METHOD'] == 'GET' && empty($errorMessage))) {
     try {
-        $statement = $pdo->query("SELECT * FROM authors");
+        $statement = $pdo->query("SELECT * FROM users WHERE role = 'author'");
         $authors = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         $statement = $pdo->query("SELECT * FROM categories");
         $categories = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Fetch selected categories for the post after submission to repopulate form
+            // fetch selected categories for the post
             $statement = $pdo->prepare("SELECT category_id FROM category_post WHERE post_id = :id");
             $statement->bindValue(':id', $id);
             $statement->execute();

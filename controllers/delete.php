@@ -15,29 +15,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $password = "root";
         $pdo = new PDO($dsn, $username, $password);
 
-        // Start a transaction
+        // start transaction
         $pdo->beginTransaction();
 
-        // Prepare the DELETE statement for the pivot table
+        // prepare delete for the pivot table
         $statement = $pdo->prepare("DELETE FROM category_post WHERE post_id = :id");
         $statement->bindValue(':id', $id);
         $statement->execute();
 
-        // Prepare the DELETE statement for the post
+        // prepare delete statement for the post
         $statement = $pdo->prepare("DELETE FROM posts WHERE id = :id");
         $statement->bindValue(':id', $id);
         $statement->execute();
 
-        // Check if any row was actually deleted
+        // check if any row was actually deleted
         if ($statement->rowCount() == 0) {
             $pdo->rollBack();
             die('Post not found or already deleted');
         }
 
-        // Commit the transaction
+        // commit the transaction
         $pdo->commit();
 
-        // Redirect to the list of posts or a confirmation page
+        // redirect to home
         header("Location: /");
         exit;
     } catch (PDOException $e) {

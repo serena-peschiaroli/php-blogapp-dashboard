@@ -11,7 +11,9 @@ $routes = [
     'post' => 'controllers/post.php',
     'new-post' => 'controllers/new-post.php',
     'edit-post' => 'controllers/edit-post.php',
-    'delete' => 'controllers/delete.php'
+    'delete' => 'controllers/delete.php',
+    'register-author' => 'controllers/auth/register-author.php',
+    'register-user' => 'controllers/auth/register-user.php',
 ];
 
 function routeToController($uri, $routes)

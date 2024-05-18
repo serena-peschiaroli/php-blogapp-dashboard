@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST["title"];
     $authorId = $_POST["author_id"];
     $body = $_POST["body"];
-    $categories = $_POST["categories"];
+    $categories = isset($_POST["categories"]) ? $_POST["categories"] : [];
 
     if (empty($title) || empty($authorId) || empty($body)) {
         $errorMessage = "All fields are required";
@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password = "root";
             $pdo = new PDO($dsn, $username, $password);
 
-            // Start a transaction
+            // start  transaction
             $pdo->beginTransaction();
 
-            // Insert new post
+            // insert new post
             $statement = $pdo->prepare("INSERT INTO posts (title, author_id, body) VALUES (:title, :author_id, :body)");
             $statement->bindValue(':title', $title);
             $statement->bindValue(':author_id', $authorId);
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $postId = $pdo->lastInsertId();
 
-            // Insert categories in pivot table
+            // insert categories in pivot table
             foreach ($categories as $category_id) {
                 $statement = $pdo->prepare("INSERT INTO category_post (post_id, category_id) VALUES (:post_id, :category_id)");
                 $statement->bindValue(':post_id', $postId);
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $statement->execute();
             }
 
-            // Commit the transaction
+            // commit  
             $pdo->commit();
 
             $successMessage = "Post created successfully!";
@@ -63,9 +63,11 @@ try {
     $password = "root";
     $pdo = new PDO($dsn, $username, $password);
 
-    $statement = $pdo->query("SELECT * FROM authors");
+    // Fetch authors with role 'author'
+    $statement = $pdo->query("SELECT * FROM users WHERE role = 'author'");
     $authors = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+    // Fetch categories
     $statement = $pdo->query("SELECT * FROM categories");
     $categories = $statement->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

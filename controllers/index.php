@@ -14,9 +14,10 @@ try {
 
     // modified  query to join posts and authors tables
     $query = "
-        SELECT posts.*, authors.username 
+        SELECT posts.*, users.id as author_id, users.username, users.first_name, users.last_name 
         FROM posts 
-        JOIN authors ON posts.author_id = authors.id
+        JOIN users ON posts.author_id = users.id
+        WHERE users.role = 'author'
     ";
 
     $statement = $pdo->prepare($query);
@@ -26,7 +27,7 @@ try {
     
     // var_dump($posts); var dump for debug
 
-    // Use $post as needed
+    
     require './views/index.view.php';
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();

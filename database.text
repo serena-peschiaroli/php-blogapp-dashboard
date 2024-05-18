@@ -133,3 +133,70 @@ INSERT INTO category_post (category_id, post_id) VALUES
 (1, 1),
 (2, 2);
 
+__________________________
+
+
+-- Create the database
+CREATE DATABASE blog_app;
+
+-- Use the database
+USE blog_app;
+
+-- Users table with roles
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone_number VARCHAR(20),
+    address TEXT,
+    avatar VARCHAR(255),
+    password VARCHAR(255) NOT NULL,
+    role ENUM('author', 'user') NOT NULL, -- Role column
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Posts table
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    author_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    body TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users(id)
+);
+
+-- Categories table
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    color VARCHAR(50)
+);
+
+-- Category_post table (many-to-many)
+CREATE TABLE category_post (
+    category_id INT NOT NULL,
+    post_id INT NOT NULL,
+    PRIMARY KEY (category_id, post_id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+);
+
+-- Sample values 
+INSERT INTO users (first_name, last_name, username, email, phone_number, address, password, role) VALUES
+('John', 'Doe', 'johndoe', 'johndoe@example.com', '1234567890', '123 Main St', 'password123', 'author'),
+('Jane', 'Smith', 'janesmith', 'janesmith@example.com', '0987654321', '456 Elm St', 'password456', 'author');
+
+INSERT INTO categories (name, color) VALUES
+('Technology', '#FF5733'),
+('Health', '#33FF57'),
+('Lifestyle', '#3357FF');
+
+INSERT INTO posts (author_id, title, body) VALUES
+(1, 'Tech Trends 2024', 'Content about tech trends.'),
+(2, 'Healthy Living Tips', 'Content about health.');
+
+INSERT INTO category_post (category_id, post_id) VALUES
+(1, 1),
+(2, 2);

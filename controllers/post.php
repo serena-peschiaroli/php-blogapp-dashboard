@@ -17,8 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $password = "root";
         $pdo = new PDO($dsn, $username, $password);
 
-        // Fetch post details along with author
-        $statement = $pdo->prepare("SELECT posts.*, authors.username FROM posts JOIN authors ON posts.author_id = authors.id WHERE posts.id = :id");
+        // fetch post details and author
+        $statement = $pdo->prepare("
+            SELECT posts.*, users.username, users.first_name, users.last_name 
+            FROM posts 
+            JOIN users ON posts.author_id = users.id 
+            WHERE posts.id = :id AND users.role = 'author'
+        ");
         $statement->bindValue(':id', $id);
         $statement->execute();
         $post = $statement->fetch(PDO::FETCH_ASSOC);
@@ -27,8 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             die('Post not found');
         }
 
-        // Fetch selected categories for the post
-        $statement = $pdo->prepare("SELECT categories.name FROM categories JOIN category_post ON categories.id = category_post.category_id WHERE category_post.post_id = :id");
+        // selected categories 
+        $statement = $pdo->prepare("
+            SELECT categories.name 
+            FROM categories 
+            JOIN category_post ON categories.id = category_post.category_id 
+            WHERE category_post.post_id = :id
+        ");
         $statement->bindValue(':id', $id);
         $statement->execute();
         $categories = $statement->fetchAll(PDO::FETCH_COLUMN);
