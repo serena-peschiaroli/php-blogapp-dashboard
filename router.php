@@ -1,7 +1,5 @@
 <?php
 
-$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-$uri = trim($uri, '/');
 
 $routes = [
     '' => 'controllers/index.php',

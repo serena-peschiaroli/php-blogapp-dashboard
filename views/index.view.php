@@ -4,7 +4,7 @@
 <?php require('partials/banner.php') ?>
 <main>
     <div class="container py-3">
-        <h1>You are on the mission page</h1>
+        <p>Hello, <?= $_SESSION['user']['email'] ?? 'Guest' ?>. Welcome to the home page.</p>
     </div>
 </main>
 
