@@ -8,13 +8,17 @@ class Database{
     public $connection;
     public $statement;
 
-    public function __construct($config, $username='postgre', $password="root")
+    public function __construct($config, $username='postgres', $password="root")
     {
-        $dsn = 'pgsql' . http_build_query($config, '', ';');
+        $dsn = 'pgsql:' . http_build_query($config, '', ';');
+      
         $this->connection = new PDO($dsn, $username, $password, [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
 
+       
+
+        
     }
 
     public function query($query, $params = []){
