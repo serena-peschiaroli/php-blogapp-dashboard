@@ -4,7 +4,7 @@ return [
         'host' => 'localhost',
         'port' => 5432,
         'dbname' => 'blog_app',
-        'charset' => 'utf8mb4'
+        // 'charset' => 'utf8mb4'
     ],
     
 ];
