@@ -14,7 +14,7 @@ class Authenticator{
             if(password_verify($password, $user['password'])){
                 $this->login([
                     'id' => $user['id'],
-                    'email' => $email
+                    'email' => $user['email']
                 ]);
 
                 return true;
@@ -32,7 +32,9 @@ class Authenticator{
         ];
 
         session_regenerate_id(true);
+
     }
+
 
     public function logout(){
         Session::destroy();

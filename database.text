@@ -45,9 +45,9 @@ CREATE TABLE category_post (
 );
 
 -- sample values 
-INSERT INTO authors (first_name, last_name, username, email, phone_number, address) VALUES
-('John', 'Doe', 'johndoe', 'johndoe@example.com', '1234567890', '123 Main St'),
-('Jane', 'Smith', 'janesmith', 'janesmith@example.com', '0987654321', '456 Elm St');
+INSERT INTO authors (first_name, last_name, email) VALUES
+('John', 'Doe', 'johndoe@example.com'),
+('Jane', 'Smith', 'janesmith@example.com');
 
 
 INSERT INTO categories (name, color) VALUES
