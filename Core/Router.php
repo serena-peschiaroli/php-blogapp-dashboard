@@ -2,6 +2,10 @@
 
 namespace Core;
 
+use Core\Middleware\Middleware;
+use Core\Middleware\Autheticated;
+use Core\Middleware\Guest;
+
 class Router{
     protected $routes = [];
 
@@ -48,6 +52,24 @@ class Router{
         require base_path("views/{$code}.php");
 
         die();
+    }
+
+    public function only($key){
+        $this->routes[array_key_last($this->routes)]['middleware'] = $key;
+
+        return $this;
+    }
+
+    public function route($uri, $method){
+        foreach($this->routes as $route){
+            if($route['uri'] === $uri && $route['method'] === strtoupper($method)){
+                Middleware::resolve($route['middleware']);
+
+                return require base_path(('Http/controllers/' . $route['controller']));
+            }
+        }
+
+        $this->abort();
     }
 
 }

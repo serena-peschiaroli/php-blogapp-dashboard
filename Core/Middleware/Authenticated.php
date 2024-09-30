@@ -1,7 +1,7 @@
 <?php
 namespace Core\Middleware;
 
-class Autheticated{
+class Authenticated{
     public function handle(){
         if(!$_SESSION['user'] ?? false){
             header('location: /');

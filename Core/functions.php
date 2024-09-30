@@ -1,14 +1,7 @@
 <?php
 
+use Core\Response;
 
-function dd($value)
-{
-    echo "<pre>";
-    var_dump($value);
-    echo "</pre>";
-
-    die();
-}
 
 function urlIs($value)
 {
@@ -33,4 +26,17 @@ function view($path, $attributes=[]){
 function redirect($path){
     header("location: {$path}");
     exit();
+}
+
+function authorize($condition, $status = Response::FORBIDDEN){
+    if(!$condition){
+        abort($status);
+    }
+    return true;
+}
+
+
+function old($key, $default = ''){
+    
+    return Core\Session::get('old')[$key] ?? $default;
 }
