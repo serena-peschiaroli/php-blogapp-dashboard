@@ -7,19 +7,7 @@
 
 
     <div class="container my-5">
-        <a href="/" class="btn btn-success mt-3 mb-5">Back</a>
-        <?php if (!empty($errorMessage)) : ?>
-            <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-                <?= $errorMessage ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if (!empty($successMessage)) : ?>
-            <div style="color: green;">
-                <?= $successMessage ?>
-            </div>
-        <?php endif; ?>
-
+        <a href="posts/index" class="btn btn-success mt-3 mb-5">Back</a>
         <form method="POST">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="title">Title:</label>
