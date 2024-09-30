@@ -20,6 +20,12 @@ class Router{
         return $this;
     }
 
+    public function get($uri, $controller)
+    {
+        return $this->add('GET', $uri, $controller);
+    }
+
+
     public function post($uri, $controller)
     {
         return $this->add('POST', $uri, $controller);
