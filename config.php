@@ -1,7 +1,11 @@
 <?php
 return [
-    'logo_image_path' => 'src\resources\images\logo.webp',
-    'author_avatar' => 'src\resources\images\author_avatar.webp'
+     'database' => [
+        'host' => 'localhost',
+        'port' => 5432,
+        'dbname' => 'blog_app',
+        'charset' => 'utf8mb4'
+    ],
     
 ];
 

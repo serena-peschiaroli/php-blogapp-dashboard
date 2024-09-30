@@ -24,10 +24,7 @@
                         <?php endif; ?>
                         <form method="POST" action="/controllers/auth/register-author.php">
                             <input type="hidden" name="role" value="author">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" name="username" id="username" value="<?=($username) ?>" required>
-                            </div>
+                            
                             <div class="mb-3">
                                 <label for="first_name" class="form-label">First Name</label>
                                 <input type="text" class="form-control" name="first_name" id="first_name" value="<?=($firstName) ?>" required>
