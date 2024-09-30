@@ -7,68 +7,56 @@
 
 
     <div class="container my-5">
-        <a href="/" class="btn btn-success mt-3 mb-5">Back</a>
-        <?php if (!empty($errorMessage)) : ?>
-            <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-                <?= $errorMessage ?>
-            </div>
-        <?php endif; ?>
+        <a href="posts/index" class="btn btn-success mt-3 mb-5">Back</a>
 
-        <?php if (!empty($successMessage)) : ?>
-            <div style="color: green;">
-                <?= $successMessage ?>
-            </div>
-        <?php endif; ?>
 
-        <form method="POST">
-            <input type="hidden" name="id" value="<?= $id ?>">
+        <form method="POST" action="/post">
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="id" value="<?= $post['id'] ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="title">Title:</label>
                 <div class="col-sm-6">
-                    <input type=" text" class="form-control" name=" title" id="title" value="<?= $title ?>">
+                    <input type=" text" class="form-control"
+                        name=" title"
+                        id="title"
+                        placeholder="Title of your post...">
+                    <?= $_POST['title'] ?? '' ?></input>
+                    <?php if (isset($errors['title'])) : ?>
+                        <p class="text-danger text-center fs-6"><?= $errors['body'] ?></p>
+                    <?php endif; ?>
                 </div>
 
             </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label" for="author_id">Author ID:</label>
-                <div class="col-sm-6">
-                    <input type="text" name="author_id" class="form-control" id="author_id" value="<?= $authorId ?>">
 
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label" for="categories">Categories:</label>
-                <div class="col-sm-6">
-                    <select class="form-control" name="categories[]" id="categories" multiple>
-                        <?php foreach ($categories as $category) : ?>
-                            <option value="<?= $category['id'] ?>" <?= in_array($category['id'], $selectedCategories) ? 'selected' : '' ?>>
-                                <?= $category['name'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="body">Body:</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" name="body" id="body"><?= $body ?></textarea>
-                </div>
+                    <textarea class="form-control" name="body" id="body"><?= $_POST['body'] ?? '' ?></textarea>
 
-            </div>
-            <?php if (!empty($successMessage)) : ?>
-                <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                    <?= $successMessage ?>
-                </div>
-            <?php endif; ?>
-            <div class="row mb-3">
-                <div class="offset-sm-3 col-sm-3 d-grid">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-                <div class="col-sm-3 d-grid">
-                    <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+                    <?php if (isset($errors['body'])) : ?>
+                        <p class="text-danger text-center fs-6"><?= $errors['body'] ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
-        </form>
+
+    </div>
+
+        <div class="row mb-3">
+
+            <div class="offset-sm-3 col-sm-3 d-grid">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            <div class="col-sm-3 d-grid">
+                <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+            </div>
+            <button type="button" class="btn btn-danger" onclick="document.querySelector('#delete-form').submit()">Delete this post</button>
+        </div>
+    </form>
+
+    <form id="delete-form" class="hidden" method="POST" action="/note">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="id" value="<?= $post['id'] ?>">
+    </form>
 
     </div>
 

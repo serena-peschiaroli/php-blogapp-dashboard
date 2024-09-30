@@ -25,9 +25,9 @@
                             <td><?= ($post['title']) ?></td>
                             <td><?= $post['created_at'] ?></td>
                             <td>
-                                <a class="btn btn-success btn-sm" href="/posts/show?id=<?= $post['id'] ?>">View</a>
-                                <a class="btn btn-warning btn-sm" href="/posts/edit?id=<?= $post['id'] ?>">Edit</a>
-                                <a class="btn btn-danger btn-sm" href="/posts/destroy?id=<?= $post['id'] ?>">Delete</a>
+                                <a class="btn btn-success btn-sm" href="/post/show?id=<?= $post['id'] ?>">View</a>
+                                <a class="btn btn-warning btn-sm" href="/post/edit?id=<?= $post['id'] ?>">Edit</a>
+                                <a class="btn btn-danger btn-sm" href="/post/destroy?id=<?= $post['id'] ?>">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -41,7 +41,7 @@
                         <h5 class="card-title"><strong><?= ($post['title']) ?></strong></h5>
                         <h6 class="card-subtitle mb-2 text-muted"> <strong>Written by:</strong><?= ($post['last_name']) ?></h6>
                         <p class="card-text"><?= (substr($post['body'], 0, 15)) ?></p>
-                        <a href="/posts/show" class="card-link">Card link</a>
+                        <a href="/posts/show" class="card-link">View post</a>
 
                     </div>
                 </div>

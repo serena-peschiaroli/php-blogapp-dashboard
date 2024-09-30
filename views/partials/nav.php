@@ -12,10 +12,13 @@
                     <a class="<?= urlIs('/') ? 'nav-link text-white' : 'nav-link active link-secondary' ?> text-decoration-none" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="<?= urlIs('/about.php') ? 'nav-link text-white' : 'nav-link active link-secondary' ?>  text-decoration-none" href="/about.php">About</a>
+                    <a class="<?= urlIs('/about') ? 'nav-link text-white' : 'nav-link active link-secondary' ?>  text-decoration-none" href="/about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="<?= urlIs('/contact.php') ? 'nav-link text-white' : 'nav-link active link-secondary' ?>  text-decoration-none" href="/contact.php">Contact</a>
+                    <a class="<?= urlIs('/contact') ? 'nav-link text-white' : 'nav-link active link-secondary' ?>  text-decoration-none" href="/contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="<?= urlIs('/posts') ? 'nav-link text-white' : 'nav-link active link-secondary' ?>  text-decoration-none" href="/posts">Posts</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">

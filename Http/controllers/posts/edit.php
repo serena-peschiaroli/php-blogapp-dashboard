@@ -14,7 +14,7 @@ $post = $db->query('select * from posts where id = :id', [
 
 authorize($post['author_id'] === $currentUserId);
 
-view("posts/show.view.php", [
+view("posts/edit.view.php", [
     'heading' => 'Edit Post',
     'errors' => [],
     'post' => $post

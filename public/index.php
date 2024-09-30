@@ -9,12 +9,23 @@ error_reporting(E_ALL);
 
 const BASE_PATH = __DIR__ . '/../';
 
+session_start();
+
+var_dump($_SESSION);
+
+//composer autoloader
+require BASE_PATH . 'vendor/autoload.php';
+
 require BASE_PATH . 'Core/functions.php';
 require BASE_PATH . 'bootstrap.php';
+
+$router = new \Core\Router();
 require BASE_PATH . 'routes.php';
 
+
+
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-$method = $_POST['method']?? $_SERVER['REQUEST_METHOD'];
+$method = $_POST['_method']?? $_SERVER['REQUEST_METHOD'];
 
 try{
     $router->route($uri, $method);
