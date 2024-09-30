@@ -1,0 +1,16 @@
+{
+    "name": "serena/php-blogapp-dashboard",
+    "authors": [
+        {
+            "name": "serena.peschiaroli",
+            "email": "serena.peschiaroli@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload":{
+        "psr-4": {
+            "Core\\": "Core/",
+            "Http\\": "Http/"
+        }
+    }
+}
