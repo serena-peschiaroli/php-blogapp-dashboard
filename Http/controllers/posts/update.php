@@ -7,7 +7,7 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
-$currentUserId = Session::get('user_id');
+$currentUserId = Session::get('user')['id'];
 
 // find the corresponding note
 $post = $db->query('select * from posts where id = :id', [
