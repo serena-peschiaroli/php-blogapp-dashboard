@@ -2,18 +2,37 @@
 
 use Core\App;
 use Core\Database;
+use Core\Session;
 
 $db = App::resolve(Database::class);
 
-$currentUserId = 1;
+if (Session::has('user')) {
 
-$post = $db->query('select * from posts where id = :id', [
-    'id' => $_GET['id']
-])->findOrFail();
+    $currentUserId = $_SESSION['user']['id'];
 
-authorize($post['author_id'] === $currentUserId);
+    $post = $db->query(
+        '
+        SELECT posts.*, authors.first_name, authors.last_name 
+        FROM posts 
+        JOIN authors ON posts.author_id = authors.id 
+        WHERE posts.id = :id',
+        ['id' => $_GET['id']]
+    )->findOrFail();
+
+    authorize($post['author_id'] === $currentUserId);
+} else {
+    $post = $db->query(
+        '
+        SELECT posts.*, authors.first_name, authors.last_name 
+        FROM posts 
+        JOIN authors ON posts.author_id = authors.id 
+        WHERE posts.id = :id',
+        ['id' => $_GET['id']]
+    )->findOrFail();
+}
 
 view("posts/show.view.php", [
     'heading' => 'Post',
     'post' => $post
 ]);
+
