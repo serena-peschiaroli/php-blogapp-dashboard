@@ -25,14 +25,18 @@
                             <td><?= ($post['title']) ?></td>
                             <td><?= $post['created_at'] ?></td>
                             <td>
-                                <a class="btn btn-success btn-sm" href="/post/show?id=<?= $post['id'] ?>">View</a>
+                                <a class="btn btn-success btn-sm" href="/post?id=<?= $post['id'] ?>">View</a>
                                 <a class="btn btn-warning btn-sm" href="/post/edit?id=<?= $post['id'] ?>">Edit</a>
-                                <a class="btn btn-danger btn-sm" href="/post/destroy?id=<?= $post['id'] ?>">Delete</a>
+                                <button type="button" class="btn btn-danger btn-sm delete-btn" onclick="deletePost()">Delete</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
 
                 </tbody>
+                <form id="delete-form" class="d-none" method="POST" action="/post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="id" value="<?= $post['id'] ?>">
+                </form>
             </table>
         <?php else : ?>
             <?php foreach ($posts as $post) : ?>
@@ -50,5 +54,12 @@
 
     </div>
 </main>
+<script type="text/javascript">
+    function deletePost() {
+        if (confirm('Are you sure you want to delete this post?')) {
+            document.getElementById('delete-form').submit();
+        }
+    }
+</script>
 
 <?php require base_path('views/partials/footer.php') ?>
