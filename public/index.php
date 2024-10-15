@@ -3,15 +3,15 @@
 use Core\Session;
 use Core\ValidationException;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 const BASE_PATH = __DIR__ . '/../';
 
 session_start();
 
-var_dump($_SESSION);
+// dd($_SESSION);
 
 //composer autoloader
 require BASE_PATH . 'vendor/autoload.php';

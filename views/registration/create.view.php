@@ -14,7 +14,7 @@
                     <label for="email" class="form-label">Email address</label>
                     <input id="email" name="email" type="email" autocomplete="email" required
                         class="form-control"
-                        placeholder="Email address">
+                        placeholder="Your email">
                     <div class="invalid-feedback">
                         Please enter a valid email address.
                     </div>
@@ -23,20 +23,20 @@
                     <label for="first_name" class="form-label">First Name</label>
                     <input id="first_name" name="first_name" type="text" required
                         class="form-control"
-                        placeholder="First name">
+                        placeholder="Your first name">
                 </div>
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Last Name</label>
                     <input id="last_name" name="last_name" type="text" required
                         class="form-control"
-                        placeholder="Last name">
+                        placeholder="Your last name">
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input id="password" name="password" type="password" autocomplete="current-password" required
                         class="form-control"
-                        placeholder="Password">
+                        placeholder="Choose a password">
                     <div class="invalid-feedback">
                         Please enter a password.
                     </div>

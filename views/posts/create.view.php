@@ -29,7 +29,7 @@
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label" for="body">Body:</label>
                 <div class="col-sm-6">
-                    <textarea class="form-control" name="body" id="body"><?= $_POST['body'] ?? '' ?></textarea>
+                    <textarea class="form-control" name="body" id="body" rows="12"><?= $_POST['body'] ?? '' ?></textarea>
 
                     <?php if (isset($errors['body'])) : ?>
                         <p class="text-danger text-center fs-6"><?= $errors['body'] ?></p>
